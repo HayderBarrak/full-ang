@@ -1,0 +1,34 @@
+<div sa-widget [editbutton]="false" color="blueDark">
+	<header>
+		<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+		<h2>Datatables Rest Demo</h2>
+	</header>
+	<div>
+		<div class="widget-body no-padding">
+
+
+			<sa-datatable [options]="options" tableClass="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th [style.width]="'8%'" data-hide="mobile-p">ID</th>
+						<th [style.width]="'8%'" data-hide="mobile-p">Login</th>
+						<th [style.width]="'20%'">Email</th>
+
+
+						<!--<th data-class="expand">Body</th>-->
+					</tr>
+				</thead>
+				<tbody>
+				<tr *ngFor="let user of users">
+					<td>{{user.id}}</td>
+					<td>{{user.login}}</td>
+					<td>{{user.email}}</td>
+				</tr>
+				</tbody>
+
+
+			</sa-datatable>
+
+		</div>
+	</div>
+</div>

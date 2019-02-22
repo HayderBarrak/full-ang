@@ -1,0 +1,214 @@
+<div class="lightest-gray-bg">
+  <br>
+  <div class="col-md-6">
+    <div class="input-group">
+      <div class="icon-addon">
+        <input type="text" id="search" class="form-control"  [(ngModel)]="controls.filter"
+               placeholder='Type to filter the table...'
+               (keyup)='updateFilter($event)'>
+        <label style="z-index: 22" for="search" class="fa fa-search" rel="tooltip" title="search"></label>
+      </div>
+    </div>
+  </div>
+
+      <div class="row"  style="padding: 8px 12px">
+        <div class="col-sm-12">
+      </div>
+      </div>
+      <ngx-datatable
+              let user
+
+
+
+      style="height: 600px;"
+
+        #myTable
+        class='table-striped'
+        [columnMode]="'flex'"
+        [headerHeight]="40"
+        [footerHeight]="60"
+        [rowHeight]="40"
+        [scrollbarV]="35"
+        [rows]="rows"
+
+              [selected]="selected"
+              [selectionType]="'checkbox'"
+              (select)='onSelect($event)'
+
+
+
+
+
+        (page)="onPage($event)">
+
+
+          <ngx-datatable-footer>
+              <ng-template
+                      ngx-datatable-footer-template
+                      let-rowCount="rowCount"
+                      let-pageSize="pageSize"
+                      let-selectedCount="selectedCount"
+                      let-curPage="curPage"
+                      let-offset="offset">
+                  <div style="margin-top:50px;margin-bottom: 30px">
+
+                              <div class="form-group">
+                                  <button class='btn btn-xs btn-primary pull-left'  (click)="add()"><i class="fa fa-plus"></i></button>
+                                  <button class='btn btn-xs btn-primary pull-left' style='margin-left:5px' (click)="Delete()"><i class="fa fa-trash"></i></button>
+                                  <button class='btn btn-xs btn-primary pull-left' style='margin-left:5px' (click)="table.rowDetail.collapseAllRows()"><i class="fa fa-refresh"></i></button>
+
+                                  <datatable-pager style="margin-left: 300px"
+                                                   [page]="curPage"
+                                                   [size]="pageSize"
+                                                   [count]="rowCount"
+                                                   (change)="myTable.onFooterPage($event)"
+                                                   [pagerLeftArrowIcon]="cssClasses.pagerLeftArrow"
+                                                   [pagerRightArrowIcon]="cssClasses.pagerRightArrow"
+                                                   [pagerPreviousIcon]="cssClasses.pagerPrevious"
+                                                   [pagerNextIcon]="cssClasses.pagerNext">
+
+                                  </datatable-pager>
+                                  <!--[hidden]="!((rowCount / pageSize) > 1)"-->
+
+                              <!--<hr style="width:100%; margin-left: 600px" />-->
+                                  <!--<div class="form-group" style="margin-left: 850px; margin-bottom: 30px">-->
+                                      <!--Rows: {{rowCount}} |-->
+                                      <!--Current: {{curPage}}-->
+                                  <!--</div>-->
+                                  <!--<select class="form-control" style="width: 70px;margin-left: 800px"-->
+                                  <!--Size: {{pageSize}} |-->
+                                              <!--(ngModelChange)="updatePageSize($event)" [(ngModel)]="controls.pageSize">-->
+                                          <!--<option>10</option>-->
+                                          <!--<option>20</option>-->
+                                          <!--<option>30</option>-->
+                                          <!--<option>50</option>-->
+                                      <!--</select>-->
+                              </div>
+
+                  </div>
+
+              </ng-template>
+          </ngx-datatable-footer>
+
+        <ngx-datatable-row-detail [rowHeight]="350" #myDetailRow (toggle)="onDetailToggle($event)">
+          <ng-template let-row="row" ngx-datatable-row-detail-template style="background-color: #66afe9">
+
+
+              <form class="form-horizontal" (ngSubmit)="save()">
+
+                  <fieldset>
+                      <legend>Platefrome détails</legend>
+                      <div class="form-group">
+                          <label class="col-md-2 control-label">ID</label>
+                          <div class="col-md-6">
+                              <input class="form-control" type="text" name="id" #id="ngModel" [(ngModel)]="platform.id" readonly>
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-2 control-label">Nom du plateforme</label>
+                          <div class="col-lg-6">
+                              <input class="form-control" placeholder="Entrer le nom du plateforme" type="text" [(ngModel)]="platform.nom" name="nom" #nom="ngModel">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-2 control-label">Adresse</label>
+                          <div class="col-md-6">
+                              <input class="form-control" placeholder="Entrer l'adresse" type="text" [(ngModel)]="platform.adresse" name="adresse" #adresse="ngModel">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-2 control-label">Login</label>
+                          <div class="col-md-6">
+                              <input class="form-control" placeholder="Entrer le login" type="text" [(ngModel)]="platform.login" name="login" #login="ngModel">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label class="col-md-2 control-label">Password</label>
+                          <div class="col-md-6">
+                              <input class="form-control" placeholder="Password field" type="password" [(ngModel)]="platform.pwd" name="pwd" #pwd="ngModel" >
+                          </div>
+                      </div>
+
+                      <div>
+                          <button class='btn btn-xs btn-success pull-right'>Save <i class="fa fa-save"></i></button>
+                      </div>
+
+                  </fieldset>
+              </form>
+
+
+
+          </ng-template>
+
+        </ngx-datatable-row-detail>
+        <!-- Column Templates -->
+          <ngx-datatable-column  [resizeable]="false" [flexGrow]="0.03">
+              <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn" class="width">
+                  <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+              </ng-template>
+          </ngx-datatable-column>
+
+         <ngx-datatable-column
+                 [flexGrow]="0.03"
+
+
+          [resizeable]="false"
+          [sortable]="true"
+          [draggable]="false"
+          [canAutoResize]="true">
+
+
+            <ng-template class="xxxx" let-row="row" ngx-datatable-cell-template>
+              <a class="fa"
+
+                 [ngClass]="{
+               'fa-plus':!row.$$expanded,
+               'fa-minus':row.$$expanded
+             }"
+                 title="Expand/Collapse Row"
+                 (click)="toggleExpandRow(row)">
+              </a>
+            </ng-template>
+
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Id" [flexGrow]="0.07" [resizeable]="false">
+          <ng-template let-row="row" [(ngModel)]="platform.id" ngx-datatable-cell-template name="id">
+            <strong>{{row.id}}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Nom" [flexGrow]="0.1"   [resizeable]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template [(ngModel)]="platform.nom" name="nom">
+            <strong>{{row.nom}}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Adresse"  [flexGrow]="0.3"   [resizeable]="false">
+          <ng-template let-value="value" ngx-datatable-cell-template [(ngModel)]="platform.adresse" name="adresse">
+            <strong>{{value}}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Login" [flexGrow]="0.1"  [resizeable]="false">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template [(ngModel)]="platform.login" name="login">
+            <strong>{{value}}</strong>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Statut" [flexGrow]="0.1"   [resizeable]="false">
+          <ng-template let-row="row" let-value="Statut" ngx-datatable-cell-template>
+            <div class="col-sm-6 text-right">
+              <on-off-switch
+                             [(model)]="options.inline"
+                             (change)="onChange()"
+              ></on-off-switch>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+
+      </ngx-datatable>
+
+
+    </div>

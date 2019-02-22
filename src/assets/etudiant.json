@@ -1,0 +1,28 @@
+{
+   "data": [
+      {
+         "name": "groupname",
+         "type": "GROUP",
+         "description": "Group Description",
+         "active": true
+      },
+      {
+         "name": "groupname",
+         "type": "GROUP",
+         "description": "Group Description",
+         "active": true
+      },
+      {
+         "name": "groupname",
+         "type": "GROUP",
+         "description": "Group Description",
+         "active": true
+      },
+      {
+         "name": "groupname",
+         "type": "GROUP",
+         "description": "Group Description",
+         "active": true
+      }
+   ]
+}
